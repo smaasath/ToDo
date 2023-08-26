@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/model/task';
 import { CrudService } from 'src/app/service/crud.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -18,7 +19,17 @@ export class DhashboardComponent implements OnInit {
   EditTasktitle: string = '';
   EditTaskdescription: string = '';
 
+  createform = new FormGroup({
+    title: new FormControl("", [Validators.required]),
+    description: new FormControl("", [Validators.required])
 
+  })
+
+  editform = new FormGroup({
+    title: new FormControl("", [Validators.required]),
+    description: new FormControl("", [Validators.required])
+
+  })
 
   constructor(private crudservice: CrudService, private spinner: NgxSpinnerService) { }
 
@@ -31,6 +42,10 @@ export class DhashboardComponent implements OnInit {
 
 
   }
+
+
+
+
 
   getAllTask() {
     this.spinner.show();
@@ -50,7 +65,7 @@ export class DhashboardComponent implements OnInit {
       this.ngOnInit();
       this.Tasktitle = '';
       this.Taskdescription = '';
-      
+
     }, err => {
       alert(err)
     })
@@ -77,7 +92,6 @@ export class DhashboardComponent implements OnInit {
   }
 
   getTaskDetail(task: Task) {
-    this.spinner.show();
     this.taskObj = task;
     this.EditTasktitle = task.title
     this.EditTaskdescription = task.description;

@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxSpinnerModule } from "ngx-spinner";
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -29,7 +31,8 @@ import {MatIconModule} from '@angular/material/icon';
     NgxSpinnerModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
