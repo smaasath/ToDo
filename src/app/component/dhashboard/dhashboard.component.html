@@ -1,0 +1,85 @@
+<nav class="navbar bg-info fixed-top mb-5">
+    <div class="container-fluid justify-content-center">
+        <h2 class="text-center">ToDo App</h2>
+    </div>
+</nav>
+<br>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-pulse-out-rapid"
+[fullScreen]="true">
+<p style="color: white"> Loading... </p>
+</ngx-spinner>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4 p-3 m-2 mb-5 bg-light rounded-4">
+        <div class="mb-3 text-center">
+            <h2 class="text-success">Create Task</h2>
+        </div>
+     
+        <form>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                    aria-describedby="basic-addon1" name="title" [(ngModel)]="Tasktitle" required>
+            </div>
+
+            <textarea class="form-control" placeholder="description" id="floatingTextarea" rows="4" name="description"
+                [(ngModel)]="Taskdescription" required></textarea>
+
+            <div class="p-4 text-center">
+                <button type="submit" class="btn btn-success" (click)="addNewTask()">Create</button>
+            </div>
+            
+
+        </form>
+    </div>
+    <div class="col-md-7 p-3 m-2 bg-light rounded-4">
+        <h2 class="text-success text-center mb-4">Task</h2>
+        <div class="p-3 m-3 rounded-4" style="background-color: #A2D9CE;" *ngFor="let task of taskArr">
+            <div class="row" style="overflow-wrap: break-word;">
+                <h4>{{task.title}}</h4>
+            </div>
+            <div class="row" style="overflow-wrap: break-word;">
+                <p>{{task.description}}</p>
+            </div>
+            <div class="text-end ">
+                <button class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#editTask"
+                    (click)="getTaskDetail(task)">Edit</button>
+                <button class="btn btn-danger m-1"
+                    [swal]="{ title: 'Do you want to delete ' + task.title + '?', showCancelButton: true, icon:'warning'}"
+                    (confirm)="deleteTask(task)">Delete</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="editTask" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editTask">Edit Task</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                            aria-describedby="basic-addon1" name="title" [(ngModel)]="EditTasktitle" required>
+                    </div>
+
+                    <textarea class="form-control" placeholder="description" id="floatingTextarea" rows="4"
+                        name="description" [(ngModel)]="EditTaskdescription" required></textarea>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        [swal]="{ title: 'Do you want to Change this ?', showCancelButton: true }"
+                        (confirm)="editTask()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+</div>
