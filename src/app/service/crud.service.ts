@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Task } from '../model/task';
+import { Task, TaskData } from '../model/task';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,23 +8,24 @@ import { Observable } from 'rxjs';
 })
 export class CrudService {
 
+  // API URL
   private baseUrl = 'https://60a21a08745cd70017576014.mockapi.io/api/v1';
 
-  constructor( private http : HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getTasks() : Observable <Task[]> {
-    return this.http.get<Task[]>(this.baseUrl+'/todo');
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.baseUrl + '/todo');
   }
 
-  addTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.baseUrl+'/todo', task);
+  addTask(task: TaskData): Observable<TaskData> {
+    return this.http.post<TaskData>(this.baseUrl + '/todo', task);
   }
 
-  updateTask(task: Task): Observable<any> {
-    return this.http.put<Task>(this.baseUrl+'/todo/'+task.id,task);
+  updateTask(task: Task): Observable<Task> {
+    return this.http.put<Task>(this.baseUrl + '/todo/' + task.id, task);
   }
 
   deleteTask(task: Task): Observable<Task> {
-    return this.http.delete<Task>(this.baseUrl+'/todo/'+task.id);
+    return this.http.delete<Task>(this.baseUrl + '/todo/' + task.id);
   }
 }

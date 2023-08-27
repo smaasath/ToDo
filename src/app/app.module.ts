@@ -10,6 +10,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavBarComponent } from './component/nav-bar/nav-bar.component';
+import { SpinnerComponent } from './component/spinner/spinner.component';
 
 
 
@@ -19,7 +21,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    DhashboardComponent
+    DhashboardComponent,
+    NavBarComponent,
+    SpinnerComponent
    
   ],
   imports: [

@@ -1,64 +1,113 @@
-<nav class="navbar bg-info fixed-top mb-5">
-    <div class="container-fluid justify-content-center">
-        <h2 class="text-center">ToDo App</h2>
-    </div>
-</nav>
-<br>
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale-pulse-out-rapid"
-    [fullScreen]="true">
-    <p style="color: white"> Loading... </p>
-</ngx-spinner>
-<div class="row justify-content-center mt-5">
-    <div class="col-md-4 p-3 m-2 mb-5 bg-light rounded-4">
-        <div class="mb-3 text-center">
-            <h2 class="text-success">Create Task</h2>
-        </div>
+<!-- Nav Bar -->
+<app-nav-bar></app-nav-bar>
+<!-- Nav Bar -->
 
+<br>
+<!-- Spinner -->
+<app-spinner></app-spinner>
+<!-- Spinner -->
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4 p-3 m-2 mb-5 rounded-4 h-50" style="background-color: #EAEDED;">
+        <div class="mb-3 text-center">
+            <h1 class="text-primary-emphasis">Create Task</h1>
+        </div>
+        <!-- Create Form Start -->
         <form [formGroup]="createform" (submit)="addNewTask()">
 
             <div class="mb-3">
+
+                <!-- Title Input -->
                 <input type="text" class="form-control" placeholder="Title" aria-label="Username"
                     aria-describedby="basic-addon1" name="title" [(ngModel)]="Tasktitle" formControlName="title"
                     required>
-              
+                <!-- Title Input -->
 
-                    <div *ngIf="createform.controls.title.touched && createform.controls.title.errors?.['required']" style="color: red; font-size: 11px;">
-                        Title is required.
-                    </div>
+                <!-- Title Validation Text -->
+                <div *ngIf="createform.controls.title.touched && createform.controls.title.errors?.['required']"
+                    style="color: red; font-size: 11px;">
+                    Title is required.
+                </div>
+                <!-- Title Validation Text -->
 
-                
             </div>
 
+            <!-- Description Input -->
             <textarea class="form-control" placeholder="description" id="floatingTextarea" rows="4" name="description"
                 [(ngModel)]="Taskdescription" formControlName="description" required></textarea>
+            <!-- Description Input -->
 
-                <div *ngIf="createform.controls.description.touched && createform.controls.description.errors?.['required']" style="color: red; font-size: 11px;">
-                    Description is required.
-                </div>
+            <!-- Description Validation Text -->
+            <div *ngIf="createform.controls.description.touched && createform.controls.description.errors?.['required']"
+                style="color: red; font-size: 11px;">
+                Description is required.
+            </div>
+            <!-- Description Validation Text -->
+
+
             <div class="p-4 text-center">
-                <button type="submit" class="btn btn-success" [disabled]="createform.invalid">Create</button>
+                <button type="submit" class="btn" [disabled]="createform.invalid" style="background-color: #3f51b5; color: white;">Create</button>
             </div>
 
 
         </form>
+
+        <!-- Create Form End -->
+
+
     </div>
-    <div class="col-md-7 p-3 m-2 bg-light rounded-4">
-        <h2 class="text-success text-center mb-4">Task</h2>
-        <div class="p-3 m-3 rounded-4" style="background-color: #A2D9CE;" *ngFor="let task of taskArr">
-            <div class="row" style="overflow-wrap: break-word;">
-                <h4>{{task.title}}</h4>
+    <div class="col-md-7 p-3 m-2 rounded-4" style="background-color: #EAEDED;">
+        <h1 class="text-center text-primary-emphasis mb-4">Task</h1>
+
+        <!-- Task Start -->
+        <div class="bg-white shadow rounded-3 p-3 mb-5" *ngFor="let task of taskArr">
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <!-- Task Title -->
+                        <h2 class="text-primary-emphasis">{{task.title}}</h2>
+                        <!-- Task Title -->
+                    </div>
+                    <!-- Task date -->
+                    <div class="row">
+                        <p class="col-6 text-body-secondary">Date : {{task.createdAt | date}}</p>
+                        <p class="col-6 text-body-secondary">Time : {{task.createdAt | date: 'h:mm:ss a'}}</p>
+                    </div>
+                    <!-- Task date -->
+
+                </div>
+                <div class="col-3 text-center">
+                    <!-- Edit Button -->
+                    <span class="me-2">
+                        <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
+                            data-bs-toggle="modal" data-bs-target="#editTask" (click)="getTaskDetail(task)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </span>
+                    <!-- Edit Button -->
+
+                    <!-- Delete Button -->
+                    <span class="me-2">
+                        <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon"
+                            [swal]="{ title: 'Do you want to delete ' + task.title + '?', showCancelButton: true, icon:'warning'}"
+                            (confirm)="deleteTask(task)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </span>
+                    <!-- Delete Button -->
+                </div>
+
+
+
             </div>
-            <div class="row" style="overflow-wrap: break-word;">
-                <p>{{task.description}}</p>
+            <!-- Task Description -->
+            <div class="row">
+                <div>{{task.description}}</div>
             </div>
-            <div class="text-end ">
-                <button class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#editTask"
-                    (click)="getTaskDetail(task)">Edit</button>
-                <button class="btn btn-danger m-1"
-                    [swal]="{ title: 'Do you want to delete ' + task.title + '?', showCancelButton: true, icon:'warning'}"
-                    (confirm)="deleteTask(task)">Delete</button>
-            </div>
+            <!-- Task Description -->
+
         </div>
+        <!-- Task End -->
     </div>
 
 
@@ -67,38 +116,42 @@
     <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="editTask" aria-hidden="true">
         <div class="modal-dialog">
             <form [formGroup]="editform">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editTask">Edit Task</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                            aria-describedby="basic-addon1" name="title" [(ngModel)]="EditTasktitle" formControlName="title" required>
-                            <div *ngIf="editform.controls.title.errors?.['required']" style="color: red; font-size: 11px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editTask">Edit Task</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                                aria-describedby="basic-addon1" name="title" [(ngModel)]="EditTasktitle"
+                                formControlName="title" required>
+                            <div *ngIf="editform.controls.title.errors?.['required']"
+                                style="color: red; font-size: 11px;">
                                 Title is required.
                             </div>
-                    </div>
+                        </div>
 
-                    <textarea class="form-control" placeholder="description" id="floatingTextarea" rows="4"
-                        name="description" [(ngModel)]="EditTaskdescription" formControlName="description" required></textarea>
+                        <textarea class="form-control" placeholder="description" id="floatingTextarea" rows="4"
+                            name="description" [(ngModel)]="EditTaskdescription" formControlName="description"
+                            required></textarea>
 
-                        <div *ngIf="editform.controls.description.errors?.['required']" style="color: red; font-size: 11px;">
+                        <div *ngIf="editform.controls.description.errors?.['required']"
+                            style="color: red; font-size: 11px;">
                             Description is required.
                         </div>
 
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            [swal]="{ title: 'Do you want to Change this ?', showCancelButton: true }"
+                            (confirm)="editTask()" [disabled]="editform.invalid">Save changes</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        [swal]="{ title: 'Do you want to Change this ?', showCancelButton: true }"
-                        (confirm)="editTask()" [disabled]="editform.invalid">Save changes</button>
-                </div>
-            </div>
-        </form>
+            </form>
         </div>
     </div>
     <!-- Modal -->
