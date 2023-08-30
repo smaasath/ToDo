@@ -46,7 +46,8 @@
 
 
             <div class="p-4 text-center">
-                <button type="submit" class="btn" [disabled]="createform.invalid" style="background-color: #3f51b5; color: white;">Create</button>
+                <button type="submit" class="btn" [disabled]="createform.invalid"
+                    style="background-color: #3f51b5; color: white;">Create</button>
             </div>
 
 
@@ -76,28 +77,29 @@
                     <!-- Task date -->
 
                 </div>
-                <div class="col-3 text-center">
-                    <!-- Edit Button -->
-                    <span class="me-2">
-                        <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
-                            data-bs-toggle="modal" data-bs-target="#editTask" (click)="getTaskDetail(task)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </span>
-                    <!-- Edit Button -->
+                <div class="col-3">
+                    <div class="d-flex justify-content-end">
+                        <!-- Edit Button -->
+                        <span class="me-2">
+                            <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
+                                data-bs-toggle="modal" data-bs-target="#editTask" (click)="getTaskDetail(task)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </span>
+                        <!-- Edit Button -->
 
-                    <!-- Delete Button -->
-                    <span class="me-2">
-                        <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon"
-                            [swal]="{ title: 'Do you want to delete ' + task.title + '?', showCancelButton: true, icon:'warning'}"
-                            (confirm)="deleteTask(task)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </span>
-                    <!-- Delete Button -->
+                        <!-- Delete Button -->
+                        <span class="me-2">
+                            <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon"
+                                [swal]="{ title: 'Do you want to delete ' + task.title + '?', showCancelButton: true, icon:'warning'}"
+                                (confirm)="deleteTask(task)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </span>
+                        <!-- Delete Button -->
+                    </div>
+
                 </div>
-
-
 
             </div>
             <!-- Task Description -->
@@ -146,7 +148,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background-color: #3f51b5; color: white;"
                             [swal]="{ title: 'Do you want to Change this ?', showCancelButton: true }"
                             (confirm)="editTask()" [disabled]="editform.invalid">Save changes</button>
                     </div>
